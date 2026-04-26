@@ -1,4 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import BrokersPage from './BrokersPage';
+import GuidancePage from './GuidancePage';
+import AboutPage from './AboutPage';
+import ContactPage from './ContactPage';
 
 type FaqItem = {
   question: string;
@@ -108,45 +112,64 @@ function BlogListPage() {
   }, []);
 
   return (
-    <div className="py-12">
-      <Container>
-        <SectionTitle eyebrow="BLOG" title="Latest Posts" subtitle="Published articles from the admin panel." />
-        {loading ? (
-          <div className="text-sm text-white/80">Loading…</div>
-        ) : error ? (
-          <div className="text-sm text-red-200">{error}</div>
-        ) : posts.length === 0 ? (
-          <div className="text-sm text-white/80">No posts yet.</div>
-        ) : (
-          <div className="grid gap-6 md:grid-cols-2">
-            {posts.map((p) => (
-              <a
-                key={p.id}
-                href={`#/blog/${p.slug}`}
-                className="block overflow-hidden rounded-2xl border border-white/15 bg-[#050812]/55 shadow-[0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur transition hover:border-white/25"
-              >
-                {p.cover_image ? (
-                  <div className="aspect-[16/9] w-full bg-white/5">
-                    <img src={p.cover_image} alt={p.title} className="h-full w-full object-cover" />
-                  </div>
-                ) : null}
-                <div className="p-6">
-                  <div className="text-xs text-white/60">{formatDate(p.published_at)}</div>
-                  <div className="mt-2 text-lg font-semibold text-white">{p.title}</div>
-                  {p.excerpt ? <div className="mt-2 text-sm leading-6 text-white/80">{p.excerpt}</div> : null}
-                  {p.tags && p.tags.length ? (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {p.tags.slice(0, 6).map((t) => (
-                        <Pill key={t}>{t}</Pill>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              </a>
-            ))}
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/blog background.jpg')" }}>
+      <div className="absolute inset-0 bg-black/85"></div>
+      <div className="relative py-12">
+        <Container>
+          <div className="mb-10 text-center">
+            <h1 className="text-4xl font-semibold text-white sm:text-5xl">Forex Trading News</h1>
+            <p className="mt-4 text-sm leading-7 text-white/85 max-w-2xl mx-auto">
+              Stay updated with the latest forex trading insights, market analysis, and expert opinions from our team.
+            </p>
           </div>
-        )}
-      </Container>
+          {loading ? (
+            <div className="text-center text-sm text-white/80">Loading…</div>
+          ) : error ? (
+            <div className="text-center text-sm text-red-200">{error}</div>
+          ) : posts.length === 0 ? (
+            <div className="text-center text-sm text-white/80">No posts yet.</div>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {posts.map((p) => (
+                <a
+                  key={p.id}
+                  href={`#/blog/${p.slug}`}
+                  className="group block overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur transition hover:border-emerald-400/50 hover:shadow-xl hover:shadow-emerald-500/10"
+                >
+                  {p.cover_image ? (
+                    <div className="aspect-[16/9] w-full bg-white/5 overflow-hidden">
+                      <img src={p.cover_image} alt={p.title} className="h-full w-full object-cover transition group-hover:scale-105" />
+                    </div>
+                  ) : (
+                    <div className="aspect-[16/9] w-full bg-gradient-to-br from-emerald-900/30 to-blue-900/30 flex items-center justify-center">
+                      <span className="text-4xl text-white/20 font-serif">FT</span>
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      {formatDate(p.published_at)}
+                    </div>
+                    <div className="mt-3 text-lg font-semibold text-white group-hover:text-emerald-300 transition">{p.title}</div>
+                    {p.excerpt ? <div className="mt-2 text-sm leading-6 text-white/75 line-clamp-3">{p.excerpt}</div> : null}
+                    {p.tags && p.tags.length ? (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {p.tags.slice(0, 3).map((t) => (
+                          <span key={t} className="text-xs rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-emerald-300">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </Container>
+      </div>
     </div>
   );
 }
@@ -180,191 +203,69 @@ function BlogPostPage({ slug }: { slug: string }) {
   }, [slug]);
 
   return (
-    <div className="py-12">
-      <Container>
-        <a href="#/blog" className="text-sm font-semibold text-white/80 hover:text-white">
-          ← Back to Blog
-        </a>
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/blog background.jpg')" }}>
+      <div className="absolute inset-0 bg-black/85"></div>
+      <div className="relative py-12">
+        <Container>
+          <a href="#/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition">
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to News
+          </a>
 
-        {loading ? (
-          <div className="mt-6 text-sm text-white/80">Loading…</div>
-        ) : error ? (
-          <div className="mt-6 text-sm text-red-200">{error}</div>
-        ) : !post ? (
-          <div className="mt-6 text-sm text-white/80">Post not found.</div>
-        ) : (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-white/15 bg-[#050812]/55 shadow-[0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur">
-            {post.cover_image ? (
-              <div className="aspect-[21/9] w-full bg-white/5">
-                <img src={post.cover_image} alt={post.title} className="h-full w-full object-cover" />
-              </div>
-            ) : null}
-            <div className="p-6 md:p-10">
-              <div className="text-xs text-white/60">{formatDate(post.published_at)}</div>
-              <h1 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{post.title}</h1>
+          {loading ? (
+            <div className="mt-6 text-center text-sm text-white/80">Loading…</div>
+          ) : error ? (
+            <div className="mt-6 text-center text-sm text-red-200">{error}</div>
+          ) : !post ? (
+            <div className="mt-6 text-center text-sm text-white/80">Post not found.</div>
+          ) : (
+            <article className="mt-8">
+              <div className="overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur shadow-2xl">
+                {post.cover_image ? (
+                  <div className="aspect-[21/9] w-full bg-white/5">
+                    <img src={post.cover_image} alt={post.title} className="h-full w-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="aspect-[21/9] w-full bg-gradient-to-br from-emerald-900/30 to-blue-900/30 flex items-center justify-center">
+                    <span className="text-6xl text-white/20 font-serif">FT</span>
+                  </div>
+                )}
+                <div className="p-6 md:p-12">
+                  <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {formatDate(post.published_at)}
+                  </div>
+                  <h1 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">{post.title}</h1>
 
-              {post.tags && post.tags.length ? (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {post.tags.map((t) => (
-                    <Pill key={t}>{t}</Pill>
-                  ))}
+                  {post.tags && post.tags.length ? (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {post.tags.map((t) => (
+                        <span key={t} className="text-xs rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-emerald-300">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  ) : null}
+
+                  <div className="mt-8 border-t border-white/10 pt-8">
+                    <div
+                      className="prose prose-invert prose-headings:text-white prose-p:text-white/85 prose-a:text-emerald-200 prose-strong:text-white prose-li:text-white/85 prose-hr:border-white/10 prose-blockquote:border-emerald-400/30 prose-blockquote:text-white/70 prose-code:text-emerald-300 prose-pre:bg-white/5"
+                      dangerouslySetInnerHTML={{ __html: post.content || '' }}
+                    />
+                  </div>
                 </div>
-              ) : null}
-
-              <div
-                className="prose prose-invert mt-8 max-w-none prose-headings:text-white prose-p:text-white/85 prose-a:text-emerald-200 prose-strong:text-white prose-li:text-white/85"
-                dangerouslySetInnerHTML={{ __html: post.content || '' }}
-              />
-            </div>
-          </div>
-        )}
-      </Container>
+              </div>
+            </article>
+          )}
+        </Container>
+      </div>
     </div>
   );
 }
-
-type TopBroker = {
-  name: string;
-  logoSrc?: string;
-  websiteUrl?: string;
-  leverage: string;
-  deposit: string;
-  spreads: string;
-  location: string;
-  instruments: string;
-  platforms: string;
-  fundingMethods: string;
-};
-
-const topBrokers: TopBroker[] = [
-  {
-    name: 'AVATRADE',
-    logoSrc: '/assets/logo/Ava trade logo.png',
-    websiteUrl: 'https://www.avatrade.com/',
-    leverage: '1:30 | 1:400',
-    deposit: 'from 10 USD',
-    spreads: 'As low as 1.3 pips',
-    location: 'Dublin, Ireland',
-    instruments: 'FX pairs to Vanilla options, CFDs on Commodities, Stocks, Indices, ETFs, Bonds and Cryptocurrencies',
-    platforms: 'MetaTrader 4, MetaTrader 5, AvatradeGo',
-    fundingMethods: 'Credit and Debit Card, Wire Transfer, Electronic Wallet payments'
-  },
-  {
-    name: 'EXNESS',
-    logoSrc: '/assets/logo/exness logo.png',
-    websiteUrl: 'https://www.exness.com/',
-    leverage: '1:30 | 1:400',
-    deposit: 'from 10 USD',
-    spreads: 'As low as 0.3 pips',
-    location: 'Cyprus',
-    instruments: 'FX pairs to Vanilla options, CFDs on Commodities, Stocks, Indices, ETFs, Bonds and Cryptocurrencies',
-    platforms: 'MetaTrader 4, MetaTrader 5',
-    fundingMethods: 'Credit and Debit Card, Wire Transfer, Electronic Wallet payments'
-  },
-  {
-    name: 'PEPPERSTONE',
-    logoSrc: '/assets/logo/pepperstone logo.jpg',
-    websiteUrl: 'https://pepperstone.com/',
-    leverage: 'up to 1:500 for Professional Clients',
-    deposit: 'from 200 USD',
-    spreads: 'As low as 0.0 pips',
-    location: 'Australia',
-    instruments: 'CFDs on equities, indices, shares, commodities, energy, metal and cryptocurrency',
-    platforms: 'MetaTrader 4, MetaTrader 5, cTrader',
-    fundingMethods: 'Bank Wire, Credit/Debit cards, Skrill, Local Bank Deposit, Neteller, Bpay, Union Pay, PayPal, MPESA, BPay, POLi'
-  },
-  {
-    name: 'XTB',
-    logoSrc: '/assets/logo/XTB logo.png',
-    websiteUrl: 'https://www.xtb.com/',
-    leverage: 'up to 1:500 for Professional Clients',
-    deposit: 'from 10 USD',
-    spreads: 'As low as 0.0 pips',
-    location: 'United Kingdom',
-    instruments: 'CFDs on equities, indices, shares, commodities, energy, metal and cryptocurrency',
-    platforms: 'MetaTrader 4, MetaTrader 5, cTrader',
-    fundingMethods: 'Bank Wire, Credit/Debit cards, Skrill, Local Bank Deposit, Neteller, Bpay, Union Pay, PayPal, MPESA, BPay, POLi'
-  },
-  {
-    name: 'IC MARKETS',
-    logoSrc: '/assets/logo/ic logo.jpg',
-    leverage: '1:30 | 1:500',
-    deposit: 'from 200 USD',
-    spreads: 'As low as 1 pip',
-    location: 'Australia',
-    instruments: 'FX, Equities, Commodities, Futures CFDs, Stocks and Bonds, Crypto trade',
-    platforms: 'MetaTrader 4, MetaTrader 5, cTrader',
-    fundingMethods: 'Bank Transfer, Cards, PayPal, Neteller, Skrill, WebMoney, Qiwi, China UnionPay, FasaPay and more'
-  },
-  {
-    name: 'TICKMILL',
-    logoSrc: '/assets/logo/tickmill logo.png',
-    websiteUrl: 'https://www.tickmill.com/',
-    leverage: '1:30',
-    deposit: 'from 100 USD',
-    spreads: 'As low as 0.3 pips',
-    location: 'UK',
-    instruments: 'Currency pairs, Cryptocurrencies, Bonds, CFDs and Precious Metals, Stock indices',
-    platforms: 'WebTrader, MetaTrader 4, MetaTrader 5',
-    fundingMethods: 'Bank Transfers, Credit/Debit Cards, E-wallets (Neteller, fasapay, UnionPay, dotpay, NganLuong)'
-  },
-  {
-    name: 'ALPARI',
-    logoSrc: '/assets/logo/alpari logo.jpg',
-    leverage: 'up to 1:500',
-    deposit: 'from 20 USD',
-    spreads: 'As low as 1.1 pips',
-    location: 'St. Vincent and the Grenadines',
-    instruments: 'Forex, spot metals, CFDs, Cryptocurrency and Binary Options',
-    platforms: 'MetaTrader 4, MetaTrader 5',
-    fundingMethods: 'Bank Wire Transfers, Credit/Debit cards, Skrill, Neteller, WebMoney, eBanking and FasaPay'
-  },
-  {
-    name: 'FXTM',
-    logoSrc: '/assets/logo/fxtm logo.png',
-    leverage: '1:30 | 1:200',
-    deposit: 'from 200 USD',
-    spreads: 'As low as 1.5 pips',
-    location: 'Cyprus',
-    instruments: 'Currency pairs, CFDs on Cryptocurrencies, Spot metal, Shares, Commodities and Indices',
-    platforms: 'MetaTrader 4, MetaTrader 5',
-    fundingMethods: 'Credit cards, Bank wire transfers, E-wallets (Neteller, Skrill, Alfa-Click, WebMoney)'
-  },
-  {
-    name: 'ETORO',
-    logoSrc: '/assets/logo/eToro logo.png',
-    websiteUrl: 'https://www.etoro.com/',
-    leverage: 'up to 1:30',
-    deposit: 'from 200 USD',
-    spreads: 'As low as 1 pip',
-    location: 'Cyprus',
-    instruments: 'Stocks, CFDs, Forex, Commodities, Portfolios, Metals, Cryptocurrencies',
-    platforms: 'Proprietary web-based software',
-    fundingMethods: 'Credit/Debit Card, Bank Wire Transfer, Payment systems'
-  },
-  {
-    name: 'IG',
-    logoSrc: '/assets/logo/ig logo.jpg',
-    leverage: '1:30 | 1:400',
-    deposit: 'from 250 GBP',
-    spreads: 'As low as 0.6 pips',
-    location: 'UK',
-    instruments: 'CFDs currency pairs, commodities, indices, stocks, financial spread betting (available in the UK and Ireland)',
-    platforms: 'MT4, IG Proprietary',
-    fundingMethods: 'Major debit/credit cards, Bank transfer, PayPal, Skrill or Neteller'
-  },
-  {
-    name: 'PLUS500',
-    logoSrc: '/assets/logo/plus500 logo.jpg',
-    leverage: '1:30 – EU/UK/AU',
-    deposit: 'from 10 USD',
-    spreads: 'Variable',
-    location: 'Israel',
-    instruments: 'Some of the greatest CFD product range including Cryptocurrency',
-    platforms: 'Plus500 Platform',
-    fundingMethods: 'Credit/Debit card, E-wallets including PayPal or Skrill, Bank transfer with direct bank-to-bank funds transfer'
-  }
-];
 
 const faqs: FaqItem[] = [
   {
@@ -478,9 +379,10 @@ function Nav() {
   const links = [
     { label: 'Home', href: '#/' },
     { label: 'Top Brokers', href: '#/brokers' },
-    { label: 'Top Guides', href: '#/guide' },
+    { label: 'Top Guidance', href: '#/guidance' },
     { label: 'Blog', href: '#/blog' },
-    { label: 'More', href: '#/more' }
+    { label: 'About', href: '#/about' },
+    { label: 'Contact', href: '#/contact' }
   ];
 
   return (
@@ -644,151 +546,6 @@ function HomeBrokersPreview() {
               </a>
             </Card>
           ))}
-        </div>
-      </Container>
-    </div>
-  );
-}
-
-function BrokersPage() {
-  return (
-    <div className="py-10 sm:py-14">
-      <Container>
-        <div className="grid gap-10">
-          <div className="grid gap-5 lg:grid-cols-12 lg:items-start">
-            <div className="lg:col-span-8">
-              <div className="text-sm font-semibold tracking-wide text-emerald-300/90">RECOMMENDED BROKERS</div>
-              <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">Recommend A Broker For Me</h1>
-              <p className="mt-4 text-sm leading-7 text-white/85">
-                How do I choose a Forex Broker or a trading platform? In order to find the most reliable and the best Forex Trading Provider, we
-                have researched and compared dozens of Forex Brokers with their trading conditions and compiled a detailed review of the most
-                popular Forex brokers. We are here to assist you in your selection and answer most of your questions.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <PrimaryButton href="#home">Take Recommendation Survey</PrimaryButton>
-                <SecondaryButton href="#/">Back to Home</SecondaryButton>
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 lg:flex lg:justify-end">
-              <div className="w-full max-w-sm rounded-2xl border border-emerald-400/30 bg-emerald-400/15 p-5">
-                <div className="text-sm font-semibold text-white">Quick action</div>
-                <div className="mt-2 text-sm text-white/70">Want a recommendation in under a minute?</div>
-                <div className="mt-5">
-                  <PrimaryButton href="#home">Recommend A Broker For Me</PrimaryButton>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="text-sm font-semibold tracking-wide text-emerald-300/90">WHY CHOOSE A BROKER WITH HELP FROM US</div>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">We are traders ourselves</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  Having someone reviewing a broker that has never traded with his own money would make sense? We have walked what we talk about.
-                </div>
-              </Card>
-
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">Support Us</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  The best way to support our team is to open an account with our affiliate links. This way we will keep the site clean from Google Ads.
-                </div>
-              </Card>
-
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">it's quality, not quantity</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  We are trying to keep our reviews’ word count to a number that someone can digest. We are not an online encyclopedia!
-                </div>
-              </Card>
-
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">Selection of Brokers</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  Are there better brokers than the ones we recommend? Yes, since there are thousands of them. We remove the noise for you, so you can focus on trading.
-                </div>
-              </Card>
-
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">We are here to help</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  Believe it or not, this website is curated by real traders. Feel free to reach out in case you believe we can provide a useful angle to your question.
-                </div>
-              </Card>
-
-              <Card className="border-white/20 bg-white/10">
-                <div className="text-base font-semibold text-white">We love communitties</div>
-                <div className="mt-2 text-sm leading-7 text-white/85">
-                  We are a community of traders, exchanging ideas and sometimes we try to sync, you remember the GameStop case right?
-                </div>
-              </Card>
-            </div>
-          </div>
-
-          <div className="grid gap-5">
-            {topBrokers.map((b) => (
-              <Card key={b.name} className="p-0 border-white/20 bg-white/10">
-                <div className="rounded-2xl p-7">
-                  <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <div className="text-lg font-semibold text-white">{b.name}</div>
-                      <div className="mt-2 text-sm text-white/75">Leverage: {b.leverage}</div>
-                    </div>
-
-                    {b.logoSrc ? (
-                      <img src={b.logoSrc} alt={b.name} className="h-16 w-auto object-contain sm:h-20" loading="lazy" />
-                    ) : (
-                      <div className="grid h-14 w-14 place-items-center rounded-2xl border border-white/10 bg-white/5 text-sm font-semibold text-white/80">
-                        {b.name.slice(0, 1)}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <div>
-                      <div className="text-xs font-semibold text-white/60">Deposit</div>
-                      <div className="mt-1 text-sm font-semibold text-white">{b.deposit}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold text-white/60">Spreads</div>
-                      <div className="mt-1 text-sm font-semibold text-white">{b.spreads}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold text-white/60">Location</div>
-                      <div className="mt-1 text-sm font-semibold text-white">{b.location}</div>
-                    </div>
-                    <div className="sm:col-span-2 lg:col-span-3">
-                      <div className="text-xs font-semibold text-white/60">Instruments</div>
-                      <div className="mt-1 text-sm leading-6 text-white/90">{b.instruments}</div>
-                    </div>
-                    <div className="sm:col-span-2 lg:col-span-3">
-                      <div className="text-xs font-semibold text-white/60">Platforms</div>
-                      <div className="mt-1 text-sm leading-6 text-white/90">{b.platforms}</div>
-                    </div>
-                    <div className="sm:col-span-2 lg:col-span-3">
-                      <div className="text-xs font-semibold text-white/60">Funding methods</div>
-                      <div className="mt-1 text-sm leading-6 text-white/90">{b.fundingMethods}</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
-                    {b.websiteUrl ? (
-                      <a href={b.websiteUrl} target="_blank" rel="noreferrer" className="text-sm font-semibold text-emerald-300 hover:text-emerald-200">
-                        Visit website →
-                      </a>
-                    ) : (
-                      <div className="text-sm text-white/50">Website not provided</div>
-                    )}
-                    <div className="text-xs text-white/55">Affiliate supported</div>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
         </div>
       </Container>
     </div>
@@ -1205,10 +962,13 @@ function Footer() {
 export default function App() {
   const bgImages = useMemo(() => ['/assets/images/home1.jpg', '/assets/images/home2.jpg', '/assets/images/home3.jpg'], []);
   const [bgIndex, setBgIndex] = useState(0);
-  const [page, setPage] = useState<'home' | 'brokers' | 'blog' | 'blog_post'>(() => {
+  const [page, setPage] = useState<'home' | 'brokers' | 'blog' | 'blog_post' | 'guidance' | 'about' | 'contact'>(() => {
     if (window.location.hash.startsWith('#/brokers')) return 'brokers';
     if (window.location.hash.startsWith('#/blog/')) return 'blog_post';
     if (window.location.hash.startsWith('#/blog')) return 'blog';
+    if (window.location.hash.startsWith('#/guidance')) return 'guidance';
+    if (window.location.hash.startsWith('#/about')) return 'about';
+    if (window.location.hash.startsWith('#/contact')) return 'contact';
     return 'home';
   });
   const [blogSlug, setBlogSlug] = useState<string | null>(() => {
@@ -1243,6 +1003,21 @@ export default function App() {
         setBlogSlug(null);
         return;
       }
+      if (window.location.hash.startsWith('#/guidance')) {
+        setPage('guidance');
+        setBlogSlug(null);
+        return;
+      }
+      if (window.location.hash.startsWith('#/about')) {
+        setPage('about');
+        setBlogSlug(null);
+        return;
+      }
+      if (window.location.hash.startsWith('#/contact')) {
+        setPage('contact');
+        setBlogSlug(null);
+        return;
+      }
       setPage('home');
       setBlogSlug(null);
     }
@@ -1253,20 +1028,22 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        {bgImages.map((src, idx) => (
-          <div
-            key={src}
-            className={classNames(
-              'absolute inset-0 bg-cover bg-center transition-opacity duration-1000',
-              idx === bgIndex ? 'opacity-100' : 'opacity-0'
-            )}
-            style={{ backgroundImage: `url(${src})` }}
-          />
-        ))}
-        <div className="absolute inset-0 bg-[#050812]/55" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050812]/20 via-[#050812]/55 to-[#050812]/75" />
-      </div>
+      {page === 'home' && (
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+          {bgImages.map((src, idx) => (
+            <div
+              key={src}
+              className={classNames(
+                'absolute inset-0 bg-cover bg-center transition-opacity duration-1000',
+                idx === bgIndex ? 'opacity-100' : 'opacity-0'
+              )}
+              style={{ backgroundImage: `url(${src})` }}
+            />
+          ))}
+          <div className="absolute inset-0 bg-[#050812]/55" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050812]/20 via-[#050812]/55 to-[#050812]/75" />
+        </div>
+      )}
 
       <Nav />
       {page === 'brokers' ? (
@@ -1275,6 +1052,12 @@ export default function App() {
         <BlogListPage />
       ) : page === 'blog_post' && blogSlug ? (
         <BlogPostPage slug={blogSlug} />
+      ) : page === 'guidance' ? (
+        <GuidancePage />
+      ) : page === 'about' ? (
+        <AboutPage />
+      ) : page === 'contact' ? (
+        <ContactPage />
       ) : (
         <>
           <Hero />
