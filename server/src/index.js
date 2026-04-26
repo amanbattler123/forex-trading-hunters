@@ -17,6 +17,7 @@ const assetsDir = path.resolve(__dirname, '../../client/public/assets');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
 
 const hasSupabaseConfig = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
 if (!hasSupabaseConfig) {
@@ -184,6 +185,63 @@ app.post('/api/admin/upload', requireAuth, async (req, res) => {
   if (error) return res.status(500).json({ message: error.message });
   const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(data.path);
   res.json({ url: publicUrl });
+});
+
+// News API endpoint using NewsAPI
+app.get('/api/news', async (req, res) => {
+  try {
+    const { category = 'all', search = '' } = req.query;
+    
+    if (!NEWS_API_KEY) {
+      return res.status(500).json({ message: 'NEWS_API_KEY not configured' });
+    }
+
+    let query = '';
+    let sources = '';
+
+    if (category === 'forex') {
+      query = 'forex OR currency OR trading OR exchange rate';
+      sources = 'bloomberg,reuters,cnbc,financial-times';
+    } else if (category === 'finance') {
+      query = 'finance OR stock OR market OR economy OR investment';
+      sources = 'bloomberg,reuters,cnbc,financial-times,wsj';
+    } else {
+      query = 'forex OR finance OR trading OR stock OR market OR economy';
+      sources = 'bloomberg,reuters,cnbc,financial-times,wsj';
+    }
+
+    if (search) {
+      query = search;
+    }
+
+    const apiUrl = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sources=${sources}&sortBy=publishedAt&pageSize=20&apiKey=${NEWS_API_KEY}`;
+    
+    console.log('[server] Fetching news from:', apiUrl);
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    console.log('[server] News API response status:', data.status, 'articles:', data.articles?.length);
+
+    if (data.status === 'error') {
+      console.log('[server] News API error details:', data);
+      return res.status(500).json({ message: data.message || 'Failed to fetch news' });
+    }
+
+    res.json({ 
+      articles: data.articles?.map(article => ({
+        title: article.title,
+        description: article.description,
+        url: article.url,
+        urlToImage: article.urlToImage,
+        publishedAt: article.publishedAt,
+        source: article.source?.name,
+        category: category === 'all' ? 'general' : category
+      })) || [] 
+    });
+  } catch (error) {
+    console.error('[server] news API error', error);
+    res.status(500).json({ message: 'Failed to fetch news' });
+  }
 });
 
 const port = Number(process.env.PORT ?? 5174);

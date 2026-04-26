@@ -3,6 +3,7 @@ import BrokersPage from './BrokersPage';
 import GuidancePage from './GuidancePage';
 import AboutPage from './AboutPage';
 import ContactPage from './ContactPage';
+import NewsPage from './NewsPage';
 
 type FaqItem = {
   question: string;
@@ -381,6 +382,7 @@ function Nav() {
     { label: 'Home', href: '#/' },
     { label: 'Top Brokers', href: '#/brokers' },
     { label: 'Top Guidance', href: '#/guidance' },
+    { label: 'News', href: '#/news' },
     { label: 'Blog', href: '#/blog' },
     { label: 'About', href: '#/about' },
     { label: 'Contact', href: '#/contact' }
@@ -945,48 +947,70 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-8 border-t border-white/10 pt-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <div className="text-xs font-semibold text-white/60">RECOMMENDED BROKERS</div>
-            <div className="mt-3 grid gap-2 text-sm text-white/85">
-              {['Avatrade', 'TickMill', 'Etoro', 'Pepperstone', 'XTB', 'Exness'].map((x) => (
-                <a key={x} href="#brokers" className="transition hover:text-white">
-                  {x}
-                </a>
-              ))}
+        <div className="mt-12 border-t border-white/10 pt-12">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 mb-12">
+            {/* Brand Section */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-white/20">
+                  <img src="/assets/logo/main logo.png" alt="Forex Trading Hunters" className="h-full w-full object-contain p-1.5" />
+                </div>
+                <div className="leading-tight">
+                  <div className="text-sm font-semibold text-white">Forex Trading Hunters</div>
+                  <div className="text-xs text-white/60">Your trusted forex guide</div>
+                </div>
+              </div>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Comprehensive forex trading guidance, broker reviews, and expert insights to help you navigate the financial markets.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Quick Links</h3>
+              <ul className="space-y-3">
+                <li><a href="#/" className="text-sm text-white/70 hover:text-emerald-400 transition">Home</a></li>
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">Top Brokers</a></li>
+                <li><a href="#/guidance" className="text-sm text-white/70 hover:text-emerald-400 transition">Top Guidance</a></li>
+                <li><a href="#/news" className="text-sm text-white/70 hover:text-emerald-400 transition">Financial News</a></li>
+                <li><a href="#/blog" className="text-sm text-white/70 hover:text-emerald-400 transition">Blog</a></li>
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Resources</h3>
+              <ul className="space-y-3">
+                <li><a href="#/about" className="text-sm text-white/70 hover:text-emerald-400 transition">About Us</a></li>
+                <li><a href="#/contact" className="text-sm text-white/70 hover:text-emerald-400 transition">Contact</a></li>
+                <li><a href="#faqs" className="text-sm text-white/70 hover:text-emerald-400 transition">FAQs</a></li>
+                <li><a href="#materials" className="text-sm text-white/70 hover:text-emerald-400 transition">Trading Materials</a></li>
+              </ul>
+            </div>
+
+            {/* Recommended Brokers */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Recommended Brokers</h3>
+              <ul className="space-y-3">
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">Avatrade</a></li>
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">TickMill</a></li>
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">Etoro</a></li>
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">Pepperstone</a></li>
+                <li><a href="#/brokers" className="text-sm text-white/70 hover:text-emerald-400 transition">XTB</a></li>
+              </ul>
             </div>
           </div>
 
-          <div>
-            <div className="text-xs font-semibold text-white/60">TRADING MATERIAL</div>
-            <div className="mt-3 grid gap-2 text-sm text-white/85">
-              {['Trading Books', 'Trading Courses', 'Trading Expos', 'Trading FAQs'].map((x) => (
-                <a key={x} href="#materials" className="transition hover:text-white">
-                  {x}
-                </a>
-              ))}
+          {/* Bottom Bar */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
+            <div className="text-xs text-white/50">
+              © 2026 Forex Trading Hunters. All rights reserved.
             </div>
-          </div>
-
-          <div>
-            <div className="text-xs font-semibold text-white/60">SITE</div>
-            <div className="mt-3 grid gap-2 text-sm text-white/85">
-              {[
-                { label: 'Home', href: '#home' },
-                { label: 'Top Brokers', href: '#brokers' },
-                { label: 'Top Guides', href: '#guide' },
-                { label: 'Blog', href: '#/blog' },
-                { label: 'FAQs', href: '#faqs' }
-              ].map((l) => (
-                <a key={l.href} href={l.href} className="transition hover:text-white">
-                  {l.label}
-                </a>
-              ))}
+            <div className="flex items-center gap-6">
+              <a href="#" className="text-xs text-white/50 hover:text-emerald-400 transition">Privacy Policy</a>
+              <a href="#" className="text-xs text-white/50 hover:text-emerald-400 transition">Terms of Service</a>
+              <a href="#" className="text-xs text-white/50 hover:text-emerald-400 transition">Disclaimer</a>
             </div>
-          </div>
-
-          <div className="flex items-end">
-            <div className="text-xs text-white/55">Copyright © 2026 Forex Trading Hunters. All rights reserved</div>
           </div>
         </div>
       </Container>
@@ -997,13 +1021,14 @@ function Footer() {
 export default function App() {
   const bgImages = useMemo(() => ['/assets/images/home1.jpg', '/assets/images/home2.jpg', '/assets/images/home3.jpg'], []);
   const [bgIndex, setBgIndex] = useState(0);
-  const [page, setPage] = useState<'home' | 'brokers' | 'blog' | 'blog_post' | 'guidance' | 'about' | 'contact'>(() => {
+  const [page, setPage] = useState<'home' | 'brokers' | 'blog' | 'blog_post' | 'guidance' | 'about' | 'contact' | 'news'>(() => {
     if (window.location.hash.startsWith('#/brokers')) return 'brokers';
     if (window.location.hash.startsWith('#/blog/')) return 'blog_post';
     if (window.location.hash.startsWith('#/blog')) return 'blog';
     if (window.location.hash.startsWith('#/guidance')) return 'guidance';
     if (window.location.hash.startsWith('#/about')) return 'about';
     if (window.location.hash.startsWith('#/contact')) return 'contact';
+    if (window.location.hash.startsWith('#/news')) return 'news';
     return 'home';
   });
   const [blogSlug, setBlogSlug] = useState<string | null>(() => {
@@ -1053,6 +1078,11 @@ export default function App() {
         setBlogSlug(null);
         return;
       }
+      if (window.location.hash.startsWith('#/news')) {
+        setPage('news');
+        setBlogSlug(null);
+        return;
+      }
       setPage('home');
       setBlogSlug(null);
     }
@@ -1093,6 +1123,8 @@ export default function App() {
         <AboutPage />
       ) : page === 'contact' ? (
         <ContactPage />
+      ) : page === 'news' ? (
+        <NewsPage />
       ) : (
         <>
           <Hero />

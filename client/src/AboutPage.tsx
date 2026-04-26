@@ -3,7 +3,7 @@ import React from 'react';
 function AboutPage() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/about us background.jpg')" }}>
-      <div className="absolute inset-0 bg-black/85"></div>
+      <div className="absolute inset-0 bg-black/30"></div>
       <div className="relative py-8 sm:py-10 lg:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
@@ -49,14 +49,11 @@ function AboutPage() {
               <h2 className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6 text-center">Our Location</h2>
               <div className="rounded-xl overflow-hidden border-2 border-emerald-400/50 shadow-2xl">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158858.1823707265!2d-0.24168149708886973!3d51.52877021967662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99%2sLondon%2C%20UK!5e0!3m2!1sen!2sus!4v1714147200000!5m2!1sen!2sus"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-0.5,51.4,0.2,51.6&layer=mapnik&marker=51.5074,-0.1278"
                   width="100%"
-                  height="300 sm:height-400 lg:height-450"
+                  height="300"
                   style={{ border: 0, filter: 'grayscale(20%) contrast(110%)' }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Map of England"
+                  title="Map of London"
                 />
               </div>
               <div className="mt-4 sm:mt-6 flex flex-col items-center gap-3">
