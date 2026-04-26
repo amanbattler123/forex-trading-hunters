@@ -159,13 +159,13 @@ function BrokersPage() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/brokers-bg.jpg')" }}>
       <div className="absolute inset-0 bg-black/90"></div>
-      <div className="relative py-10 sm:py-14">
+      <div className="relative py-8 sm:py-10 lg:py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10">
-          <div className="grid gap-5 lg:grid-cols-12 lg:items-start">
+        <div className="grid gap-8 lg:gap-10">
+          <div className="grid gap-6 lg:gap-5 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-8">
-              <div className="text-sm font-semibold tracking-wide text-emerald-300/90">RECOMMENDED BROKERS</div>
-              <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">Recommend A Broker For Me</h1>
+              <div className="text-xs sm:text-sm font-semibold tracking-wide text-emerald-300/90">RECOMMENDED BROKERS</div>
+              <h1 className="mt-2 text-2xl sm:text-3xl font-semibold text-white lg:text-4xl">Recommend A Broker For Me</h1>
               <p className="mt-4 text-sm leading-7 text-white/85">
                 How do I choose a Forex Broker or a trading platform? In order to find the most reliable and the best Forex Trading Provider, we
                 have researched and compared dozens of Forex Brokers with their trading conditions and compiled a detailed review of the most
@@ -173,17 +173,17 @@ function BrokersPage() {
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#home" className="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-400">
+                <a href="#home" className="inline-flex items-center justify-center rounded-xl bg-emerald-500 px-4 py-2.5 sm:px-6 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-400">
                   Take Recommendation Survey
                 </a>
-                <a href="#/" className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10">
+                <a href="#/" className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 sm:px-6 text-sm font-semibold text-white transition hover:bg-white/10">
                   Back to Home
                 </a>
               </div>
             </div>
 
             <div className="lg:col-span-4 lg:flex lg:justify-end">
-              <div className="w-full max-w-sm rounded-2xl border border-emerald-400/30 bg-emerald-400/15 p-5">
+              <div className="w-full max-w-sm rounded-2xl border border-emerald-400/30 bg-emerald-400/15 p-4 sm:p-5">
                 <div className="text-sm font-semibold text-white">Quick action</div>
                 <div className="mt-2 text-sm text-white/70">Want a recommendation in under a minute?</div>
                 <div className="mt-5">

@@ -114,10 +114,10 @@ function BlogListPage() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/blog background.jpg')" }}>
       <div className="absolute inset-0 bg-black/85"></div>
-      <div className="relative py-12">
+      <div className="relative py-8 sm:py-10 lg:py-12">
         <Container>
-          <div className="mb-10 text-center">
-            <h1 className="text-4xl font-semibold text-white sm:text-5xl">Forex Trading News</h1>
+          <div className="mb-8 sm:mb-10 text-center">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">Forex Trading News</h1>
             <p className="mt-4 text-sm leading-7 text-white/85 max-w-2xl mx-auto">
               Stay updated with the latest forex trading insights, market analysis, and expert opinions from our team.
             </p>
@@ -129,7 +129,7 @@ function BlogListPage() {
           ) : posts.length === 0 ? (
             <div className="text-center text-sm text-white/80">No posts yet.</div>
           ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
               {posts.map((p) => (
                 <a
                   key={p.id}
@@ -145,14 +145,14 @@ function BlogListPage() {
                       <span className="text-4xl text-white/20 font-serif">FT</span>
                     </div>
                   )}
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       {formatDate(p.published_at)}
                     </div>
-                    <div className="mt-3 text-lg font-semibold text-white group-hover:text-emerald-300 transition">{p.title}</div>
+                    <div className="mt-3 text-base sm:text-lg font-semibold text-white group-hover:text-emerald-300 transition">{p.title}</div>
                     {p.excerpt ? <div className="mt-2 text-sm leading-6 text-white/75 line-clamp-3">{p.excerpt}</div> : null}
                     {p.tags && p.tags.length ? (
                       <div className="mt-4 flex flex-wrap gap-2">
@@ -205,7 +205,7 @@ function BlogPostPage({ slug }: { slug: string }) {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/blog background.jpg')" }}>
       <div className="absolute inset-0 bg-black/85"></div>
-      <div className="relative py-12">
+      <div className="relative py-8 sm:py-10 lg:py-12">
         <Container>
           <a href="#/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,25 +221,25 @@ function BlogPostPage({ slug }: { slug: string }) {
           ) : !post ? (
             <div className="mt-6 text-center text-sm text-white/80">Post not found.</div>
           ) : (
-            <article className="mt-8">
+            <article className="mt-6 sm:mt-8">
               <div className="overflow-hidden rounded-2xl border border-white/20 bg-white/10 backdrop-blur shadow-2xl">
                 {post.cover_image ? (
-                  <div className="aspect-[21/9] w-full bg-white/5">
+                  <div className="aspect-[16/9] sm:aspect-[21/9] w-full bg-white/5">
                     <img src={post.cover_image} alt={post.title} className="h-full w-full object-cover" />
                   </div>
                 ) : (
-                  <div className="aspect-[21/9] w-full bg-gradient-to-br from-emerald-900/30 to-blue-900/30 flex items-center justify-center">
-                    <span className="text-6xl text-white/20 font-serif">FT</span>
+                  <div className="aspect-[16/9] sm:aspect-[21/9] w-full bg-gradient-to-br from-emerald-900/30 to-blue-900/30 flex items-center justify-center">
+                    <span className="text-4xl sm:text-6xl text-white/20 font-serif">FT</span>
                   </div>
                 )}
-                <div className="p-6 md:p-12">
+                <div className="p-4 sm:p-6 md:p-12">
                   <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium">
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     {formatDate(post.published_at)}
                   </div>
-                  <h1 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">{post.title}</h1>
+                  <h1 className="mt-4 text-2xl sm:text-3xl font-semibold text-white lg:text-4xl">{post.title}</h1>
 
                   {post.tags && post.tags.length ? (
                     <div className="mt-4 flex flex-wrap gap-2">
@@ -251,9 +251,9 @@ function BlogPostPage({ slug }: { slug: string }) {
                     </div>
                   ) : null}
 
-                  <div className="mt-8 border-t border-white/10 pt-8">
+                  <div className="mt-6 sm:mt-8 border-t border-white/10 pt-6 sm:pt-8">
                     <div
-                      className="prose prose-invert prose-headings:text-white prose-p:text-white/85 prose-a:text-emerald-200 prose-strong:text-white prose-li:text-white/85 prose-hr:border-white/10 prose-blockquote:border-emerald-400/30 prose-blockquote:text-white/70 prose-code:text-emerald-300 prose-pre:bg-white/5"
+                      className="prose prose-invert prose-headings:text-white prose-p:text-white/85 prose-a:text-emerald-200 prose-strong:text-white prose-li:text-white/85 prose-hr:border-white/10 prose-blockquote:border-emerald-400/30 prose-blockquote:text-white/70 prose-code:text-emerald-300 prose-pre:bg-white/5 prose-sm sm:prose-base"
                       dangerouslySetInnerHTML={{ __html: post.content || '' }}
                     />
                   </div>
@@ -376,6 +376,7 @@ function SecondaryButton({ children, href }: { children: React.ReactNode; href: 
 }
 
 function Nav() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const links = [
     { label: 'Home', href: '#/' },
     { label: 'Top Brokers', href: '#/brokers' },
@@ -389,17 +390,17 @@ function Nav() {
     <div className="sticky top-0 z-30 border-b border-white/15 bg-[#050812]/90 backdrop-blur">
       <Container>
         <div className="flex h-16 items-center justify-between">
-          <a href="#home" className="flex items-center gap-3">
-            <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-white/20">
+          <a href="#home" className="flex items-center gap-2 sm:gap-3">
+            <div className="grid h-10 w-10 sm:h-12 sm:w-12 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-white/20">
               <img src="/assets/logo/main logo.png" alt="Forex Trading Hunters" className="h-full w-full object-contain p-1.5" />
             </div>
-            <div className="leading-tight">
+            <div className="leading-tight hidden sm:block">
               <div className="text-sm font-semibold text-white">Forex Trading Hunters</div>
               <div className="text-xs text-white/60">Forex trading complete guide</div>
             </div>
           </a>
 
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-4 lg:gap-6 md:flex">
             {links.map((l) => (
               <a key={l.href} href={l.href} className="text-sm font-semibold text-white/85 hover:text-white">
                 {l.label}
@@ -407,11 +408,45 @@ function Nav() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2">
             <SecondaryButton href="#brokers">Get A Broker</SecondaryButton>
             <PrimaryButton href="#guide">Get Started</PrimaryButton>
           </div>
+
+          <button
+            className="md:hidden p-2 text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-white/10">
+            <div className="flex flex-col gap-3">
+              {links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="text-sm font-semibold text-white/85 hover:text-white py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {l.label}
+                </a>
+              ))}
+              <div className="flex flex-col gap-2 pt-2 border-t border-white/10 mt-2">
+                <SecondaryButton href="#brokers">Get A Broker</SecondaryButton>
+                <PrimaryButton href="#guide">Get Started</PrimaryButton>
+              </div>
+            </div>
+          </div>
+        )}
       </Container>
     </div>
   );

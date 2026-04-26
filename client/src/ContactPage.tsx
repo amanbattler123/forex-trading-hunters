@@ -26,16 +26,16 @@ function ContactPage() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/contact-bg.jpg')" }}>
       <div className="absolute inset-0 bg-black/85"></div>
-      <div className="relative py-10 sm:py-14">
+      <div className="relative py-8 sm:py-10 lg:py-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-semibold text-white sm:text-4xl">Contact Us</h1>
+          <div className="text-center mb-8 sm:mb-10">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-white lg:text-4xl">Contact Us</h1>
             <p className="mt-4 text-sm leading-7 text-white/85">
               Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/20 bg-white/10 p-8 backdrop-blur">
+          <div className="rounded-2xl border border-white/20 bg-white/10 p-4 sm:p-6 lg:p-8 backdrop-blur">
             <form onSubmit={onSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
