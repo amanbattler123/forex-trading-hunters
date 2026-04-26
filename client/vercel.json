@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://forex-trading-hunters.onrender.com/api/$1"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "https://forex-trading-hunters.onrender.com/assets/$1"
+    }
+  ]
+}

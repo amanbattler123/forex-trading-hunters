@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FTH Admin — Forex Trading Hunters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+<!-- Quill rich text editor -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<style>
+  /* ── Reset & Tokens ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #04060f;
+    --surface:   #080c1a;
+    --surface2:  #0d1226;
+    --border:    rgba(255,255,255,0.09);
+    --border2:   rgba(255,255,255,0.15);
+    --green:     #34d399;
+    --green-dim: rgba(52,211,153,0.15);
+    --green-glow:rgba(52,211,153,0.08);
+    --text:      #f0f4ff;
+    --muted:     rgba(240,244,255,0.5);
+    --muted2:    rgba(240,244,255,0.28);
+    --red:       #f87171;
+    --red-dim:   rgba(248,113,113,0.12);
+    --yellow:    #fbbf24;
+    --yellow-dim:rgba(251,191,36,0.12);
+    --mono:      'Space Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+    --radius:    12px;
+    --radius-sm: 8px;
+    --shadow:    0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  html { font-size: 15px; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  #app { display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* ── Login Screen ── */
+  #login-screen {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(52,211,153,0.07) 0%, transparent 70%),
+      var(--bg);
+  }
+
+  .login-box {
+    width: 100%;
+    max-width: 420px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow), 0 0 60px rgba(52,211,153,0.04);
+  }
+
+  .login-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .login-logo img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: white;
+    padding: 4px;
+  }
+
+  .login-logo-text { line-height: 1.2; }
+  .login-logo-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+  .login-logo-sub  { font-size: 0.7rem; color: var(--muted); font-family: var(--mono); }
+
+  .login-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .login-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  /* ── Form Controls ── */
+  .field { margin-bottom: 1.1rem; }
+
+  .field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+  }
+
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.9rem;
+    font-size: 0.88rem;
+    font-family: var(--sans);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(52,211,153,0.12);
+  }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.83rem;
+    font-weight: 600;
+    font-family: var(--sans);
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #030710;
+  }
+  .btn-primary:hover { background: #6ee7b7; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+  .btn-danger {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid rgba(248,113,113,0.2);
+  }
+  .btn-danger:hover { background: rgba(248,113,113,0.2); }
+
+  .btn-warning {
+    background: var(--yellow-dim);
+    color: var(--yellow);
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+  .btn-warning:hover { background: rgba(251,191,36,0.2); }
+
+  .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.78rem; }
+  .btn-full { width: 100%; }
+  .btn-icon { padding: 0.5rem; border-radius: 8px; }
+
+  /* ── Alert / Toast ── */
+  .alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.83rem;
+    margin-top: 1rem;
+  }
+  .alert-error { background: var(--red-dim); border: 1px solid rgba(248,113,113,0.2); color: var(--red); }
+  .alert-success { background: var(--green-dim); border: 1px solid rgba(52,211,153,0.2); color: var(--green); }
+
+  #toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 999;
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    max-width: 320px;
+    box-shadow: var(--shadow);
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+  #toast.success { background: var(--green-dim); border: 1px solid rgba(52,211,153,0.3); color: var(--green); }
+  #toast.error   { background: var(--red-dim);   border: 1px solid rgba(248,113,113,0.3); color: var(--red); }
+
+  /* ── Admin Layout ── */
+  #admin-screen { display: none; flex: 1; flex-direction: column; }
+  #admin-screen.active { display: flex; }
+
+  /* Top bar */
+  .topbar {
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .topbar-logo img {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: white;
+    padding: 2px;
+    object-fit: contain;
+  }
+
+  .topbar-badge {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid rgba(52,211,153,0.25);
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+
+  .topbar-spacer { flex: 1; }
+
+  .topbar-user {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Main content area */
+  .main { flex: 1; padding: 2rem 1.5rem; max-width: 960px; width: 100%; margin: 0 auto; }
+
+  /* ── Section headers ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title span {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--green);
+    background: var(--green-dim);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-left: 0.6rem;
+    vertical-align: middle;
+  }
+
+  /* ── Blog List ── */
+  .blog-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .blog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.15s;
+  }
+  .blog-card:hover { border-color: var(--border2); }
+
+  .blog-card-cover {
+    width: 72px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--surface2);
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .blog-card-cover-placeholder {
+    width: 72px;
+    height: 52px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+  }
+
+  .blog-card-body { flex: 1; min-width: 0; }
+
+  .blog-card-title {
+    font-size: 0.93rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+  }
+
+  .blog-card-meta {
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .badge-published { background: var(--green-dim); color: var(--green); border: 1px solid rgba(52,211,153,0.2); }
+  .badge-draft     { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(251,191,36,0.2); }
+
+  .blog-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.68rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--muted);
+  }
+
+  .blog-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+  .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .empty-state h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 0.83rem; }
+
+  /* ── Editor ── */
+  #editor-view { display: none; }
+  #editor-view.active { display: block; }
+  #list-view.hidden { display: none; }
+
+  .editor-topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+  }
+
+  .editor-topbar h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    flex: 1;
+  }
+
+  /* Quill overrides */
+  .ql-container {
+    font-family: var(--sans) !important;
+    font-size: 0.9rem !important;
+    border: 1px solid var(--border2) !important;
+    border-top: none !important;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm) !important;
+    background: var(--surface2) !important;
+    color: var(--text) !important;
+    min-height: 260px;
+  }
+
+  .ql-toolbar {
+    background: var(--surface) !important;
+    border: 1px solid var(--border2) !important;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0 !important;
+  }
+
+  .ql-toolbar .ql-stroke { stroke: var(--muted) !important; }
+  .ql-toolbar .ql-fill   { fill:   var(--muted) !important; }
+  .ql-toolbar .ql-picker-label { color: var(--muted) !important; }
+  .ql-toolbar button:hover .ql-stroke,
+  .ql-toolbar button.ql-active .ql-stroke { stroke: var(--green) !important; }
+  .ql-toolbar button:hover .ql-fill,
+  .ql-toolbar button.ql-active .ql-fill   { fill: var(--green) !important; }
+  .ql-editor { color: var(--text) !important; }
+  .ql-editor.ql-blank::before { color: var(--muted2) !important; font-style: normal !important; }
+  .ql-picker-options { background: var(--surface2) !important; border-color: var(--border2) !important; }
+  .ql-picker-item { color: var(--text) !important; }
+
+  /* Image gallery in editor */
+  .img-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+  }
+
+  .img-thumb {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--border2);
+    background: var(--surface2);
+  }
+
+  .img-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .img-thumb-remove {
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 22px; height: 22px;
+    background: rgba(248,113,113,0.85);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: white;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+  .img-thumb-remove:hover { background: var(--red); }
+
+  .img-thumb-set-cover {
+    position: absolute;
+    bottom: 4px; left: 4px;
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    background: rgba(0,0,0,0.7);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .img-thumb-set-cover:hover,
+  .img-thumb-set-cover.active { background: var(--green-dim); color: var(--green); border-color: rgba(52,211,153,0.3); }
+
+  /* Upload drop zone */
+  .drop-zone {
+    border: 2px dashed var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    position: relative;
+  }
+  .drop-zone:hover, .drop-zone.drag-over {
+    border-color: var(--green);
+    background: var(--green-glow);
+  }
+  .drop-zone input[type="file"] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer;
+    width: 100%; height: 100%;
+  }
+  .drop-zone-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .drop-zone-text { font-size: 0.8rem; color: var(--muted); }
+  .drop-zone-text strong { color: var(--green); }
+
+  /* Tags input */
+  .tags-input-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.6rem;
+    cursor: text;
+    min-height: 38px;
+    align-items: center;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .tags-input-wrapper:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(52,211,153,0.12);
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 0.75rem;
+    color: var(--green);
+  }
+  .tag-chip button {
+    background: none; border: none;
+    cursor: pointer; color: var(--green);
+    font-size: 0.75rem; line-height: 1;
+    padding: 0;
+    opacity: 0.7;
+    transition: opacity 0.1s;
+  }
+  .tag-chip button:hover { opacity: 1; }
+
+  .tags-input {
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 0.83rem;
+    font-family: var(--sans);
+    outline: none;
+    min-width: 80px;
+    flex: 1;
+  }
+
+  /* Row / grid helpers */
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .row > .field { flex: 1; min-width: 180px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  /* Loading spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(52,211,153,0.2);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Scroll */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+  /* Confirm modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; padding: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    padding: 1.75rem;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: var(--shadow);
+    transform: translateY(10px);
+    transition: transform 0.15s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .modal p  { font-size: 0.83rem; color: var(--muted); margin-bottom: 1.25rem; }
+  .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ══════════ LOGIN ══════════ -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">
+        <img src="/assets/logo/main logo.png" alt="Logo" onerror="this.style.display='none'" />
+        <div class="login-logo-text">
+          <div class="login-logo-name">Forex Trading Hunters</div>
+          <div class="login-logo-sub">admin console</div>
+        </div>
+      </div>
+
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-sub">Sign in with your admin credentials to continue.</p>
+
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" id="login-email" placeholder="admin@example.com" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="login-password" placeholder="••••••••••" autocomplete="current-password" />
+      </div>
+
+      <button class="btn btn-primary btn-full" id="login-btn" onclick="doLogin()">
+        Sign in
+      </button>
+
+      <div id="login-error" class="alert alert-error" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ ADMIN SHELL ══════════ -->
+  <div id="admin-screen">
+
+    <div class="topbar">
+      <a class="topbar-logo" href="#">
+        <img src="/assets/logo/main logo.png" alt="Logo" onerror="this.style.display='none'" />
+        FTH Admin
+      </a>
+      <span class="topbar-badge">BLOG MANAGER</span>
+      <div class="topbar-spacer"></div>
+      <span class="topbar-user" id="topbar-email"></span>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Sign out</button>
+    </div>
+
+    <div class="main">
+
+      <!-- List view -->
+      <div id="list-view">
+        <div class="section-header">
+          <div class="section-title">
+            Blog Posts
+            <span id="post-count">0</span>
+          </div>
+          <button class="btn btn-primary" onclick="openEditor(null)">
+            + New Post
+          </button>
+        </div>
+
+        <div id="blog-list" class="blog-list">
+          <div class="empty-state">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor view -->
+      <div id="editor-view">
+        <div class="editor-topbar">
+          <button class="btn btn-ghost btn-sm" onclick="closeEditor()">← Back</button>
+          <h2 id="editor-title-label">New Post</h2>
+          <button class="btn btn-ghost btn-sm" id="save-draft-btn" onclick="savePost('draft')">Save Draft</button>
+          <button class="btn btn-primary btn-sm" id="publish-btn" onclick="savePost('published')">Publish</button>
+        </div>
+
+        <div class="field">
+          <label>Post Title *</label>
+          <input type="text" id="f-title" placeholder="e.g. EUR/USD Weekly Analysis — April 2026" />
+        </div>
+
+        <div class="field">
+          <label>Excerpt <small style="color:var(--muted2);font-weight:400;">(shown in blog list)</small></label>
+          <textarea id="f-excerpt" rows="2" placeholder="A short summary shown in the blog listing…"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Content *</label>
+          <div id="quill-editor"></div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="field">
+          <label>
+            Images &amp; Screenshots
+            <small style="color:var(--muted2);font-weight:400;margin-left:0.4rem;">First marked as cover becomes the thumbnail</small>
+          </label>
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="img-input" multiple accept="image/*" onchange="handleFiles(this.files)" />
+            <div class="drop-zone-icon">🖼</div>
+            <div class="drop-zone-text">
+              <strong>Click to upload</strong> or drag &amp; drop<br/>
+              PNG, JPG, GIF, WebP · max 5 MB each
+            </div>
+          </div>
+          <div class="img-gallery" id="img-gallery"></div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="grid2">
+          <div class="field">
+            <label>Tags <small style="color:var(--muted2);font-weight:400;">(press Enter or comma to add)</small></label>
+            <div class="tags-input-wrapper" id="tags-wrapper" onclick="document.getElementById('tag-input').focus()">
+              <input type="text" class="tags-input" id="tag-input" placeholder="e.g. EUR/USD, analysis…" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select id="f-status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="editor-error" class="alert alert-error" style="display:none;margin-top:1rem;"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Confirm delete modal -->
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal">
+    <h3>Delete post?</h3>
+    <p>This action cannot be undone. The post will be permanently removed.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// CONFIG — update these two values
+// ══════════════════════════════════════════════
+const API_BASE = (
+  location.protocol === 'file:'
+  || (
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    && (location.port === '5173' || location.port === '3000')
+  )
+) ? 'http://localhost:5174' : '';   // empty = same origin, or e.g. 'http://localhost:5174'
+
+// ── State ─────────────────────────────────────
+let token        = localStorage.getItem('fth_token') || null;
+let currentPost  = null;   // post being edited (null = new)
+let uploadedImgs = [];     // [{url, isCover}]
+let tags         = [];
+let quill        = null;
+let deleteTarget = null;
+
+// ── Init ──────────────────────────────────────
+(async function init() {
+  if (token) {
+    const ok = await verifyToken();
+    if (ok) { showAdmin(); await loadPosts(); return; }
+  }
+  showLogin();
+})();
+
+// ── Auth ──────────────────────────────────────
+async function doLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const btn      = document.getElementById('login-btn');
+  const err      = document.getElementById('login-error');
+  err.style.display = 'none';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Signing in…';
+
+  try {
+    const res  = await fetch(`${API_BASE}/api/auth/sign-in`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await readJson(res);
+    if (!res.ok) throw new Error(data.message || 'Sign-in failed');
+    token = data.access_token;
+    localStorage.setItem('fth_token', token);
+    document.getElementById('topbar-email').textContent = data.user.email;
+    showAdmin();
+    await loadPosts();
+  } catch(e) {
+    err.textContent  = e.message;
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+  }
+}
+
+document.getElementById('login-password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+async function verifyToken() {
+  try {
+    const res = await apiFetch('/api/admin/blogs');
+    return res.ok;
+  } catch { return false; }
+}
+
+function doLogout() {
+  token = null;
+  localStorage.removeItem('fth_token');
+  showLogin();
+}
+
+// ── Views ─────────────────────────────────────
+function showLogin() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-screen').classList.remove('active');
+}
+function showAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').classList.add('active');
+  const email = localStorage.getItem('fth_user_email') || '';
+  if(email) document.getElementById('topbar-email').textContent = email;
+}
+
+// ── API helper ────────────────────────────────
+async function apiFetch(path, opts = {}) {
+  return fetch(`${API_BASE}${path}`, {
+    ...opts,
+    headers: {
+      'content-type': 'application/json',
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+      ...(opts.headers || {})
+    }
+  });
+}
+
+async function readJson(res) {
+  const text = await res.text();
+  if (!text) return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { message: text };
+  }
+}
+
+// ── Posts list ────────────────────────────────
+async function loadPosts() {
+  const list = document.getElementById('blog-list');
+  list.innerHTML = '<div class="empty-state"><div class="spinner"></div></div>';
+
+  try {
+    const res  = await apiFetch('/api/admin/blogs');
+    const data = await readJson(res);
+    if (!res.ok) throw new Error(data.message);
+    renderList(data.blogs || []);
+  } catch(e) {
+    list.innerHTML = `<div class="alert alert-error">${e.message}</div>`;
+  }
+}
+
+function renderList(blogs) {
+  const list = document.getElementById('blog-list');
+  document.getElementById('post-count').textContent = blogs.length;
+
+  if (!blogs.length) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">✍️</div>
+        <h3>No posts yet</h3>
+        <p>Create your first forex blog post to get started.</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = blogs.map(b => `
+    <div class="blog-card">
+      ${b.cover_image
+        ? `<img class="blog-card-cover" src="${esc(b.cover_image)}" alt="" />`
+        : `<div class="blog-card-cover-placeholder">📰</div>`}
+      <div class="blog-card-body">
+        <div class="blog-card-title">${esc(b.title)}</div>
+        <div class="blog-card-meta">
+          <span class="badge ${b.status === 'published' ? 'badge-published' : 'badge-draft'}">${b.status}</span>
+          <span>${formatDate(b.published_at || b.created_at)}</span>
+        </div>
+        ${b.tags && b.tags.length ? `<div class="blog-card-tags">${b.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+      </div>
+      <div class="blog-card-actions">
+        <button class="btn btn-ghost btn-sm btn-icon" title="Edit" onclick="openEditor('${b.id}')">✏️</button>
+        <button class="btn btn-danger btn-sm btn-icon" title="Delete" onclick="openDeleteModal('${b.id}')">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Editor ────────────────────────────────────
+async function openEditor(id) {
+  currentPost  = null;
+  uploadedImgs = [];
+  tags         = [];
+
+  // Init Quill once
+  if (!quill) {
+    quill = new Quill('#quill-editor', {
+      theme: 'snow',
+      placeholder: 'Write your forex analysis, market insights, or trading tips here…',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['blockquote', 'code-block'],
+          ['link'],
+          ['clean']
+        ]
+      }
+    });
+  }
+
+  // Reset form
+  document.getElementById('f-title').value   = '';
+  document.getElementById('f-excerpt').value = '';
+  document.getElementById('f-status').value  = 'draft';
+  quill.setText('');
+  renderGallery();
+  renderTags();
+  document.getElementById('editor-error').style.display = 'none';
+  document.getElementById('editor-title-label').textContent = id ? 'Edit Post' : 'New Post';
+
+  if (id) {
+    try {
+      const res  = await apiFetch(`/api/admin/blogs/${id}`);
+      const data = await readJson(res);
+      if (!res.ok) throw new Error(data.message);
+      const b = data.blog;
+      currentPost = b;
+      document.getElementById('f-title').value   = b.title || '';
+      document.getElementById('f-excerpt').value = b.excerpt || '';
+      document.getElementById('f-status').value  = b.status || 'draft';
+      quill.clipboard.dangerouslyPasteHTML(b.content || '');
+      tags = b.tags || [];
+      uploadedImgs = (b.images || []).map(url => ({
+        url,
+        isCover: url === b.cover_image
+      }));
+      if (b.cover_image && !uploadedImgs.find(i => i.url === b.cover_image)) {
+        uploadedImgs.unshift({ url: b.cover_image, isCover: true });
+      }
+      renderGallery();
+      renderTags();
+    } catch(e) {
+      toast('Failed to load post: ' + e.message, 'error');
+      return;
+    }
+  }
+
+  document.getElementById('list-view').classList.add('hidden');
+  document.getElementById('editor-view').classList.add('active');
+}
+
+function closeEditor() {
+  document.getElementById('editor-view').classList.remove('active');
+  document.getElementById('list-view').classList.remove('hidden');
+}
+
+async function savePost(status) {
+  const title   = document.getElementById('f-title').value.trim();
+  const excerpt = document.getElementById('f-excerpt').value.trim();
+  const content = quill.root.innerHTML;
+  const err     = document.getElementById('editor-error');
+  err.style.display = 'none';
+
+  if (!title) { showEditorError('Title is required.'); return; }
+  if (!content || quill.getText().trim().length < 5) { showEditorError('Content is too short.'); return; }
+
+  const coverImg = uploadedImgs.find(i => i.isCover);
+  const extraImgs = uploadedImgs.filter(i => !i.isCover).map(i => i.url);
+
+  const payload = {
+    title, excerpt, content,
+    cover_image: coverImg ? coverImg.url : (uploadedImgs[0] ? uploadedImgs[0].url : ''),
+    images: uploadedImgs.map(i => i.url),
+    tags,
+    status
+  };
+
+  const publishBtn = document.getElementById('publish-btn');
+  const draftBtn   = document.getElementById('save-draft-btn');
+  publishBtn.disabled = true;
+  draftBtn.disabled   = true;
+  publishBtn.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    let res;
+    if (currentPost) {
+      res = await apiFetch(`/api/admin/blogs/${currentPost.id}`, { method: 'PUT', body: JSON.stringify(payload) });
+    } else {
+      res = await apiFetch('/api/admin/blogs', { method: 'POST', body: JSON.stringify(payload) });
+    }
+    const data = await readJson(res);
+    if (!res.ok) throw new Error(data.message || 'Save failed');
+
+    toast(status === 'published' ? '🎉 Post published!' : '💾 Draft saved!', 'success');
+    closeEditor();
+    await loadPosts();
+  } catch(e) {
+    showEditorError(e.message);
+  } finally {
+    publishBtn.disabled = false;
+    draftBtn.disabled   = false;
+    publishBtn.textContent = 'Publish';
+  }
+}
+
+function showEditorError(msg) {
+  const el = document.getElementById('editor-error');
+  el.textContent   = msg;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ── Image uploads ─────────────────────────────
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+});
+
+async function handleFiles(files) {
+  const arr = Array.from(files);
+  for (const file of arr) {
+    if (!file.type.startsWith('image/')) { toast('Only image files are allowed.', 'error'); continue; }
+    if (file.size > 5 * 1024 * 1024) { toast(`${file.name} exceeds 5 MB limit.`, 'error'); continue; }
+    await uploadFile(file);
+  }
+}
+
+async function uploadFile(file) {
+  const thumb = addPendingThumb(file);
+  try {
+    const base64 = await toBase64(file);
+    const res    = await apiFetch('/api/admin/upload', {
+      method: 'POST',
+      body: JSON.stringify({ base64: base64.split(',')[1], filename: file.name, mimetype: file.type })
+    });
+    const data = await readJson(res);
+    if (!res.ok) throw new Error(data.message);
+
+    const isFirst = uploadedImgs.length === 0;
+    uploadedImgs.push({ url: data.url, isCover: isFirst });
+    renderGallery();
+  } catch(e) {
+    toast('Upload failed: ' + e.message, 'error');
+    thumb?.remove();
+  }
+}
+
+function addPendingThumb(file) {
+  const gallery = document.getElementById('img-gallery');
+  const url = URL.createObjectURL(file);
+  const div = document.createElement('div');
+  div.className = 'img-thumb';
+  div.innerHTML = `<img src="${url}" /><div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;"><div class="spinner"></div></div>`;
+  gallery.appendChild(div);
+  return div;
+}
+
+function renderGallery() {
+  const gallery = document.getElementById('img-gallery');
+  gallery.innerHTML = uploadedImgs.map((img, idx) => `
+    <div class="img-thumb">
+      <img src="${esc(img.url)}" alt="" />
+      <button class="img-thumb-remove" onclick="removeImg(${idx})" title="Remove">✕</button>
+      <button class="img-thumb-set-cover ${img.isCover ? 'active' : ''}" onclick="setCover(${idx})" title="Set as cover">
+        ${img.isCover ? '✓ Cover' : 'Set cover'}
+      </button>
+    </div>
+  `).join('');
+}
+
+function removeImg(idx) {
+  uploadedImgs.splice(idx, 1);
+  if (uploadedImgs.length && !uploadedImgs.find(i => i.isCover)) {
+    uploadedImgs[0].isCover = true;
+  }
+  renderGallery();
+}
+
+function setCover(idx) {
+  uploadedImgs.forEach((img, i) => img.isCover = (i === idx));
+  renderGallery();
+}
+
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── Tags ──────────────────────────────────────
+const tagInput = document.getElementById('tag-input');
+tagInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    addTag(tagInput.value);
+  }
+  if (e.key === 'Backspace' && !tagInput.value && tags.length) {
+    tags.pop();
+    renderTags();
+  }
+});
+
+function addTag(value) {
+  const val = value.trim().replace(/,/g, '');
+  if (val && !tags.includes(val) && tags.length < 10) {
+    tags.push(val);
+    renderTags();
+  }
+  tagInput.value = '';
+}
+
+function removeTag(idx) {
+  tags.splice(idx, 1);
+  renderTags();
+}
+
+function renderTags() {
+  const wrapper = document.getElementById('tags-wrapper');
+  // Remove existing chips
+  wrapper.querySelectorAll('.tag-chip').forEach(el => el.remove());
+  const chips = tags.map((t, i) => {
+    const span = document.createElement('span');
+    span.className = 'tag-chip';
+    span.innerHTML = `${esc(t)}<button onclick="removeTag(${i})" type="button">✕</button>`;
+    return span;
+  });
+  chips.forEach(c => wrapper.insertBefore(c, tagInput));
+}
+
+// ── Delete modal ──────────────────────────────
+function openDeleteModal(id) {
+  deleteTarget = id;
+  document.getElementById('delete-modal').classList.add('open');
+}
+function closeDeleteModal() {
+  deleteTarget = null;
+  document.getElementById('delete-modal').classList.remove('open');
+}
+async function confirmDelete() {
+  if (!deleteTarget) return;
+  try {
+    const res = await apiFetch(`/api/admin/blogs/${deleteTarget}`, { method: 'DELETE' });
+    const data = await readJson(res);
+    if (!res.ok) throw new Error(data.message);
+    toast('Post deleted.', 'success');
+    closeDeleteModal();
+    await loadPosts();
+  } catch(e) {
+    toast('Delete failed: ' + e.message, 'error');
+    closeDeleteModal();
+  }
+}
+
+// ── Toast ─────────────────────────────────────
+let toastTimer;
+function toast(msg, type = 'success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = `show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+// ── Helpers ───────────────────────────────────
+function esc(str) {
+  return (str || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function formatDate(str) {
+  if (!str) return '—';
+  return new Date(str).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+</script>
+</body>
+</html>

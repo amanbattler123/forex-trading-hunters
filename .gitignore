@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+.DS_Store
+.env
+server/.env
+client/.env
+client/.env.*
+server/.env.*
+*.log
+coverage/
+.vercel/
