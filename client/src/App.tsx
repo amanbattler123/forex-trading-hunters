@@ -346,9 +346,10 @@ function Card({ children, className }: { children: React.ReactNode; className?: 
   );
 }
 
-function PrimaryButton({ children, href, onClick, type }: { children: React.ReactNode; href?: string; onClick?: () => void; type?: 'button' | 'submit' }) {
-  const className =
+function PrimaryButton({ children, href, onClick, type, className: extraClassName }: { children: React.ReactNode; href?: string; onClick?: () => void; type?: 'button' | 'submit'; className?: string }) {
+  const baseClassName =
     'inline-flex items-center justify-center rounded-xl bg-emerald-400 px-4 py-2.5 text-sm font-semibold text-ink-950 shadow-sm shadow-emerald-400/20 transition hover:bg-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-[#050812]';
+  const className = extraClassName ? `${baseClassName} ${extraClassName}` : baseClassName;
 
   if (href) {
     return (
@@ -458,40 +459,53 @@ function Hero() {
   return (
     <div id="home" className="relative overflow-hidden">
       <Container>
-        <div className="py-14 sm:py-20">
-          <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
+        <div className="py-8 sm:py-14 lg:py-20">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl lg:text-4xl">
                 ARE YOU SOMEONE WITH LITTLE OR NO EXPERIENCE TRADING?
               </h1>
 
-              <p className="mt-6 text-xl font-semibold text-white/90">
+              <p className="mt-4 text-lg font-semibold text-white/90 sm:text-xl">
                 TAKE THIS QUICK RECOMMENDATION SURVEY TO GET A BROKER
               </p>
 
-              <p className="mt-3 text-base text-white/70">
+              <p className="mt-2 text-sm text-white/70 sm:text-base">
                 TAKE LESS THAN A MINUTE
               </p>
 
-              <div className="mt-8">
+              <div className="mt-6 sm:hidden">
+                <PrimaryButton href="#brokers" className="w-full">TAKE RECOMMENDATION</PrimaryButton>
+              </div>
+              <div className="mt-6 hidden sm:block">
                 <PrimaryButton href="#brokers">TAKE RECOMMENDATION</PrimaryButton>
               </div>
             </div>
 
             <Card className="relative w-full max-w-2xl overflow-hidden">
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/15 bg-black">
-                <video
-                  src="/assets/videos/home%20video.mp4"
-                  className="h-full w-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls
-                />
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-emerald-900/40 to-blue-900/40">
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-8 text-center">
+                  <div className="grid grid-cols-3 gap-3 sm:gap-6 w-full max-w-lg">
+                    <div className="text-center">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-400">50+</div>
+                      <div className="mt-1 text-xs text-white/70">Brokers</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-400">10K+</div>
+                      <div className="mt-1 text-xs text-white/70">Traders</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-400">5+</div>
+                      <div className="mt-1 text-xs text-white/70">Years</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 sm:mt-6 text-xs sm:text-sm text-white/80">
+                    Trusted by traders worldwide
+                  </div>
+                </div>
               </div>
 
-              <div className="mt-6 flex items-start justify-between gap-4">
+              <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
                 <div>
                   <div className="text-sm font-semibold text-white">What do you want to do today?</div>
                   <div className="mt-1 text-xs text-white/60">Choose a path—then get the right broker and material.</div>
@@ -909,44 +923,6 @@ function Footer() {
   return (
     <div className="border-t border-white/10 bg-[#050812]/70 py-12 backdrop-blur">
       <Container>
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-5">
-            <div className="text-xs font-semibold tracking-wide text-emerald-300/90">TRADE WITH CONFIDENCE</div>
-            <div className="mt-2 text-2xl font-semibold text-white">Forex Trading Hunters</div>
-            <div className="mt-3 text-sm leading-6 text-white/75">
-              Education-first guidance, broker short-lists, and practical trading materials.
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <PrimaryButton href="#guide">Get Started</PrimaryButton>
-              <SecondaryButton href="#brokers">Get A Broker</SecondaryButton>
-            </div>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:col-span-7">
-            <div className="rounded-2xl border border-white/15 bg-white/8 p-5 shadow-[0_1px_0_0_rgba(255,255,255,0.08)]">
-              <div className="text-xs font-semibold text-white/80">Risk Disclaimer</div>
-              <div className="mt-2 text-xs leading-5 text-white/75">
-                CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. Between 74-89% of retail investor
-                accounts lose money when trading CFDs. You should consider whether you understand how CFDs work and whether you can afford to take
-                the high risk of losing your money.
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/15 bg-white/8 p-5 shadow-[0_1px_0_0_rgba(255,255,255,0.08)]">
-              <div className="text-xs font-semibold text-white/80">Disclosure</div>
-              <div className="mt-2 text-xs leading-5 text-white/75">
-                Currency, crypto, stock or other trading finance instrument trading on margin involves high risk, and is not suitable for all
-                investors. As a leveraged product losses are able to exceed initial deposits and capital is at risk. Before deciding to trade Forex
-                or any other financial instrument you should carefully consider your investment objectives, level of experience, and risk appetite.
-                We work hard to offer you valuable information about all of the brokers that we review. In order to provide you with this free
-                service we receive advertising fees from brokers, including some of those listed within our rankings and on this page. While we do
-                our utmost to ensure that all our data is up-to-date, we encourage you to verify our information with the broker directly.
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="mt-12 border-t border-white/10 pt-12">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 mb-12">
             {/* Brand Section */}

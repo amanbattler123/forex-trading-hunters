@@ -76,22 +76,22 @@ function NewsPage() {
   return (
     <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed" style={{ backgroundImage: "url('/assets/images/news page backoground.jpg')" }}>
       <div className="absolute inset-0 bg-black/20"></div>
-      <div className="relative py-8 sm:py-10 lg:py-14">
+      <div className="relative py-6 sm:py-8 lg:py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-2">Financial News</h1>
-            <p className="text-base text-white/70">Latest updates from trusted financial sources</p>
+          <div className="mb-6 sm:mb-8 text-center">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-2">Financial News</h1>
+            <p className="text-sm sm:text-base text-white/70">Latest updates from trusted financial sources</p>
           </div>
 
           {/* Controls */}
-          <div className="mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <div className="flex gap-2 flex-wrap">
+          <div className="mb-6 sm:mb-8 flex flex-col gap-4">
+            <div className="flex gap-2 flex-wrap justify-center">
               {(['all', 'forex', 'finance'] as const).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setCategory(cat)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition ${
+                  className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium capitalize transition ${
                     category === cat
                       ? 'bg-emerald-500 text-white'
                       : 'bg-white/10 text-white/80 hover:bg-white/20'
@@ -101,24 +101,24 @@ function NewsPage() {
                 </button>
               ))}
             </div>
-            <form onSubmit={handleSearch} className="flex gap-2 w-full sm:w-auto">
+            <form onSubmit={handleSearch} className="flex gap-2 w-full max-w-md mx-auto">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search..."
-                className="flex-1 sm:w-64 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-white placeholder-white/50 focus:border-emerald-400 focus:outline-none"
+                className="flex-1 rounded-lg border border-white/20 bg-white/10 px-3 sm:px-4 py-2 text-sm text-white placeholder-white/50 focus:border-emerald-400 focus:outline-none"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-400 transition"
+                className="px-3 sm:px-4 py-2 rounded-lg bg-emerald-500 text-white text-sm font-medium hover:bg-emerald-400 transition"
               >
                 Search
               </button>
             </form>
           </div>
 
-          {/* Masonry Grid */}
+          {/* News Grid */}
           {loading ? (
             <div className="text-center py-20 text-white/70">Loading news...</div>
           ) : error ? (
@@ -126,14 +126,14 @@ function NewsPage() {
           ) : articles.length === 0 ? (
             <div className="text-center py-20 text-white/70">No news found</div>
           ) : (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {articles.map((article, index) => (
                 <a
                   key={`${article.url}-${index}`}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block break-inside-avoid"
+                  className="group block"
                 >
                   <div className="relative rounded-xl overflow-hidden bg-white/5 hover:bg-white/10 transition">
                     {article.urlToImage ? (
@@ -141,27 +141,25 @@ function NewsPage() {
                         src={article.urlToImage} 
                         alt={article.title} 
                         className="w-full object-cover transition group-hover:scale-105"
-                        style={{ aspectRatio: index % 3 === 0 ? '16/9' : index % 3 === 1 ? '4/3' : '1/1' }}
+                        style={{ aspectRatio: '16/9' }}
                       />
                     ) : (
                       <div 
                         className="w-full bg-gradient-to-br from-emerald-900/30 to-blue-900/30 flex items-center justify-center"
-                        style={{ aspectRatio: index % 3 === 0 ? '16/9' : index % 3 === 1 ? '4/3' : '1/1' }}
+                        style={{ aspectRatio: '16/9' }}
                       >
                         <span className="text-4xl text-white/20 font-serif">FT</span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <div className="flex items-center gap-2 text-xs text-emerald-400 mb-2">
-                          <span className="font-medium">{article.source}</span>
-                          <span>•</span>
-                          <span>{formatDate(article.publishedAt)}</span>
-                        </div>
-                        <h3 className="text-sm font-semibold text-white line-clamp-2">
-                          {article.title}
-                        </h3>
+                    <div className="p-3 sm:p-4">
+                      <div className="flex items-center gap-2 text-xs text-emerald-400 mb-2">
+                        <span className="font-medium">{article.source}</span>
+                        <span>•</span>
+                        <span>{formatDate(article.publishedAt)}</span>
                       </div>
+                      <h3 className="text-sm sm:text-base font-semibold text-white group-hover:text-emerald-300 transition line-clamp-2">
+                        {article.title}
+                      </h3>
                     </div>
                   </div>
                 </a>
